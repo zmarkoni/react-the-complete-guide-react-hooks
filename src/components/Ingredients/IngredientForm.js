@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '../UI/Card';
 import './IngredientForm.css';
 
+// React.memo is used only to rerender component is PROPS are changed!
 const IngredientForm = React.memo(props => {
   const submitHandler = event => {
     event.preventDefault();
