@@ -12,6 +12,12 @@ const Ingredients = () => {
         setUserIngredients(prevIngredients => [...prevIngredients, {...ingredient}]);
     };
 
+    const removeIngredientHandler = (ingredientId) => {
+        // We need to get STATE here and remove ingredient
+        // filter return new array
+        setUserIngredients(prevIngredients => prevIngredients.filter((ingredient) => ingredient.id !== ingredientId));
+    };
+
     return (
         <div className="App">
             {/* onAddIngredient will be passed to IngredientForm */}
@@ -19,7 +25,7 @@ const Ingredients = () => {
 
             <section>
                 <Search/>
-                <IngredientList ingredients={userIngredients} onRemoveItem={() => {}} />
+                <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler} />
             </section>
         </div>
     );
