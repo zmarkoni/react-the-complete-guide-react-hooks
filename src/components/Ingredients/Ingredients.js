@@ -9,7 +9,7 @@ import ErrorModal from "../UI/ErrorModal";
 const ingredientReducer = (currentIngredients, action) => {
     switch (action.type) {
         case "SET_INGREDIENT":
-            return action.ingredients;
+            return action.filteredIngredients;
         case "ADD_INGREDIENT":
             return [...currentIngredients, action.ingredient];
         case "DELETE_INGREDIENT":
@@ -35,12 +35,9 @@ const httpReducer = (currentHttpState, action) => {
 };
 
 const Ingredients = () => {
-
         const [userIngredients, dispatch] = useReducer(ingredientReducer, []);
         // const [userIngredients, setUserIngredients] = useState([]);
-
         const [httpState, dispatchHttp] = useReducer(httpReducer, {loading: false, error: null});
-
         // const [isLoading, setIsLoading] = useState(false);
         // const [error, setError] = useState();
 
@@ -106,11 +103,13 @@ const Ingredients = () => {
             });
         };
 
+        // useCallback prevent infinite loop by cashing the setUserIngredients(SET_INGREDIENT) to avoid re-rendering inside useEffect in Search.js
+        // https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/15700360#announcements
         const filteredIngredientsHandler = useCallback( (filteredIngredients) => {
             // setUserIngredients(filteredIngredients);
             dispatch({
                type: "SET_INGREDIENT",
-               ingredients: filteredIngredients
+                filteredIngredients: filteredIngredients
             });
         }, []); // Here we don't pass useCallback dependency since setUserIngredients is useState method
 
