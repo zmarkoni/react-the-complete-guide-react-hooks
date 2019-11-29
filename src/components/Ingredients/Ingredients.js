@@ -45,7 +45,9 @@ const Ingredients = () => {
             console.log('RENDERING INGREDIENTS', userIngredients);
         }, [userIngredients]); // Will run when userIngredients change ONLY
 
+
         const addIngredientHandler = (ingredient) => {
+            //console.log('addIngredientHandler argument: ', ingredient);
             // setIsLoading(true);
             dispatchHttp({type: "SEND"});
 
@@ -125,7 +127,9 @@ const Ingredients = () => {
 
                 {/* onAddIngredient will be passed to IngredientForm */}
                 <IngredientForm
-                    onAddIngredient={addIngredientHandler}
+                    onAddIngredient={(ingredient) => addIngredientHandler(ingredient)}
+                    // can be written shorter without passing argument 'ingredient'
+                    //onAddIngredient={addIngredientHandler}
                     loading={httpState.loading}
                 />
 

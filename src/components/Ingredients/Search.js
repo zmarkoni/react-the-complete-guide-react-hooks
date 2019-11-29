@@ -10,7 +10,7 @@ const Search = React.memo(props => {
 
     // We can use useEffect() for all sideEffects functionality.
     // useEffect() is executed after and for EVERY render/rerender cycle
-    // useEffect accept 2 arguments
+    // useEffect accept 2 arguments(our function, dependency array where we can pass variables or data outside useEffect) and return cleanUp function
     useEffect(() => {
         // will execute right after onChange setEnteredFilter method
 
@@ -46,7 +46,6 @@ const Search = React.memo(props => {
                     // Pass filtered ingredients to Ingredients.js
                     // props.onFilteredIngredients(filteredIngredients);
                     onFilteredIngredients(filteredIngredients); // we can use without props since we have extract it in object destructuring on the top!!!
-
                 });
             }
         }, 500);
