@@ -5,11 +5,11 @@ import Search from './Search';
 import IngredientList from "./IngredientList";
 import ErrorModal from "../UI/ErrorModal";
 
-// reducer autmoticaly pass 2 arguments(state, action)
+// reducer automatically pass 2 arguments(state, action)
 const ingredientReducer = (currentIngredients, action) => {
     switch (action.type) {
         case "SET_INGREDIENT":
-            return action.filteredIngredients;
+            return action.ingredients;
         case "ADD_INGREDIENT":
             return [...currentIngredients, action.ingredient];
         case "DELETE_INGREDIENT":
@@ -110,8 +110,8 @@ const Ingredients = () => {
         const filteredIngredientsHandler = useCallback( (filteredIngredients) => {
             // setUserIngredients(filteredIngredients);
             dispatch({
-               type: "SET_INGREDIENT",
-                filteredIngredients: filteredIngredients
+                type: "SET_INGREDIENT",
+                ingredients: filteredIngredients
             });
         }, []); // Here we don't pass useCallback dependency since setUserIngredients is useState method
 
