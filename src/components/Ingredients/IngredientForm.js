@@ -7,7 +7,8 @@ import LoadingIndicator from "../UI/LoadingIndicator";
 
 // React.memo is used only to rerender component is PROPS are changed!
 const IngredientForm = React.memo(props => {
-    console.log('IngredientForm props: ', props);
+    // console.log('IngredientForm props: ', props);
+
     //https://reactjs.org/docs/hooks-reference.html#usestate
 
     // useState will replace current state, not merge like before, so we need always to pass other state when using it.
@@ -17,6 +18,7 @@ const IngredientForm = React.memo(props => {
     const [enteredTitle, setEnteredTitle] = useState('');
     //     property.value, actionFunction
     const [enteredAmount, setEnteredAmount] = useState('');
+    console.log('RENDERING INGREDIENT FROM!');
 
     const submitHandler = event => {
         event.preventDefault();

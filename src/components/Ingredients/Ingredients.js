@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useReducer, useMemo } from 'react';
 
 import IngredientForm from './IngredientForm';
 import Search from './Search';
@@ -46,7 +46,7 @@ const Ingredients = () => {
         }, [userIngredients]); // Will run when userIngredients change ONLY
 
 
-        const addIngredientHandler = (ingredient) => {
+        const addIngredientHandler = useCallback((ingredient) => {
             //console.log('addIngredientHandler argument: ', ingredient);
             // setIsLoading(true);
             dispatchHttp({type: "SEND"});
@@ -80,9 +80,9 @@ const Ingredients = () => {
                 // setIsLoading(false);
                 dispatchHttp({type: "ERROR", errorMessage: error.message});
             });
-        };
+        }, []);
 
-        const removeIngredientHandler = (ingredientId) => {
+        const removeIngredientHandler = useCallback((ingredientId) => {
             // setIsLoading(true);
             dispatchHttp({type: "SEND"});
             fetch(`https://react-hooks-84331.firebaseio.com/ingredients/${ingredientId}.json`, {
@@ -103,7 +103,7 @@ const Ingredients = () => {
                 // setIsLoading(false);
                 dispatchHttp({type: "ERROR", errorMessage: error.message});
             });
-        };
+        }, []);
 
         // useCallback prevent infinite loop by cashing the setUserIngredients(SET_INGREDIENT) to avoid re-rendering inside useEffect in Search.js
         // https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/15700360#announcements
@@ -115,14 +115,21 @@ const Ingredients = () => {
             });
         }, []); // Here we don't pass useCallback dependency since setUserIngredients is useState method
 
-        const clearError = () => {
+        const clearError = useCallback(() => {
             // setError(null);
             dispatchHttp({type: "CLEAR"});
-        };
+        }, []);
+
+        // When we using useMemo hook, we don't need to use React.memo!
+        const ingredientList = useMemo(() => {
+            return <IngredientList
+                ingredients={userIngredients}
+                onRemoveItem={removeIngredientHandler}
+            />
+        }, [userIngredients, removeIngredientHandler]);
 
         return (
             <div className="App">
-
                 {httpState.error && <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal>}
 
                 {/* onAddIngredient will be passed to IngredientForm */}
@@ -135,7 +142,7 @@ const Ingredients = () => {
 
                 <section>
                     <Search onFilteredIngredients={filteredIngredientsHandler}/>
-                    <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler}/>
+                    {ingredientList}
                 </section>
             </div>
         );
