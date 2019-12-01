@@ -1,5 +1,13 @@
 import {useReducer, useCallback} from 'react';
 
+const initialState = {
+    loading: false,
+    error: null,
+    data: null,
+    extra: null,
+    identifier: null
+};
+
 // Reducer is updating httpState properties directly
 const httpReducer = (currentHttpState, action) => {
     switch (action.type) {
@@ -10,7 +18,7 @@ const httpReducer = (currentHttpState, action) => {
         case "ERROR":
             return {loading: false, error: action.errorMessage};
         case "CLEAR":
-            return {...currentHttpState, error: null};
+            return initialState;
         default:
             throw new Error('Should not get there!');
     }
@@ -18,13 +26,9 @@ const httpReducer = (currentHttpState, action) => {
 
 const useHttp = () => {
     // our state is httpState
-    const [httpState, dispatchHttp] = useReducer(httpReducer, {
-        loading: false,
-        error: null,
-        data: null,
-        extra: null,
-        identifier: null
-    });
+    const [httpState, dispatchHttp] = useReducer(httpReducer, initialState);
+
+    const clear = useCallback( () => dispatchHttp({type: 'CLEAR'}), []);
 
     const sendRequest = useCallback((url, method, body, reqExtra, reqIdentifier) => {
         dispatchHttp({type: "SEND", identifier: reqIdentifier});
@@ -56,7 +60,8 @@ const useHttp = () => {
         data: httpState.data,
         sendRequest: sendRequest,
         reqExtra: httpState.extra,
-        reqIdentifier: httpState.identifier
+        reqIdentifier: httpState.identifier,
+        clear: clear
     }
 };
 

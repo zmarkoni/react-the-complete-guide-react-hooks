@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useReducer, useMemo} from 'react';
+import React, {useEffect, useCallback, useReducer, useMemo} from 'react';
 
 import IngredientForm from './IngredientForm';
 import Search from './Search';
@@ -22,7 +22,7 @@ const ingredientReducer = (currentIngredients, action) => {
 const Ingredients = () => {
         const [userIngredients, dispatch] = useReducer(ingredientReducer, []);
         // const [userIngredients, setUserIngredients] = useState([]);
-        const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier} = useHttp();
+        const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear} = useHttp();
 
         useEffect(() => {
             if (!isLoading && !error && reqIdentifier === 'REMOVE_ING_IDENTIFIER') {
@@ -44,6 +44,7 @@ const Ingredients = () => {
                 ingredient,
                 'ADD_ING_IDENTIFIER'
             );
+            // We will handle response in useEffect
         }, [sendRequest]);
 
         const removeIngredientHandler = useCallback((ingredientId) => {
@@ -72,10 +73,9 @@ const Ingredients = () => {
             });
         }, []); // Here we don't pass useCallback dependency since setUserIngredients is useState method
 
-        const clearError = useCallback(() => {
-            // setError(null);
-            //dispatchHttp({type: "CLEAR"});
-        }, []);
+        // const clearError = useCallback(() => {
+        //     clear();
+        // }, []);
 
         // When we using useMemo hook, we don't need to use React.memo!
         const ingredientList = useMemo(() => {
@@ -87,7 +87,7 @@ const Ingredients = () => {
 
         return (
             <div className="App">
-                {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+                {error && <ErrorModal onClose={clear}>{error}</ErrorModal>}
 
                 {/* onAddIngredient will be passed to IngredientForm */}
                 <IngredientForm
