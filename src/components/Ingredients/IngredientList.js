@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import './IngredientList.css';
+import {AuthContext} from "../../context/auth-context";
 
 const IngredientList = (props) => {
     console.log('RENDERING INGREDIENT LIST!');
+
+    // just for testing context
+    const authContext = useContext(AuthContext);
+    console.log('INGREDIENT_LIST authContext: ', authContext);
+
     return (
         <section className="ingredient-list">
             <h2>Loaded Ingredients</h2>
