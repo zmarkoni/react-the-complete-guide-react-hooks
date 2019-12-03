@@ -12,11 +12,22 @@ const initialState = {
 const httpReducer = (currentHttpState, action) => {
     switch (action.type) {
         case "SEND":
-            return {loading: true, error: null, data: null, extra: null, identifier: action.identifier};
+            return {
+                loading: true,
+                error: null,
+                data: null,
+                extra: null,
+                identifier: action.identifier};
         case "RESPONSE":
-            return {...currentHttpState, loading: false, data: action.responseData, extra: action.extra}; // here we will not update error
+            return {
+                ...currentHttpState,
+                loading: false,
+                data: action.responseData,
+                extra: action.extra}; // here we will not update error
         case "ERROR":
-            return {loading: false, error: action.errorMessage};
+            return {
+                loading: false,
+                error: action.errorMessage};
         case "CLEAR":
             return initialState;
         default:
@@ -32,6 +43,7 @@ const useHttp = () => {
 
     const sendRequest = useCallback((url, method, body, reqExtra, reqIdentifier) => {
         dispatchHttp({type: "SEND", identifier: reqIdentifier});
+
         fetch(
             url,
             {

@@ -8,6 +8,7 @@ const Auth = (props) => {
     const authContext = useContext(AuthContext);
 
     const loginHandler = () => {
+        //console.log('AUTH authContext.login');
         authContext.login();
     };
 

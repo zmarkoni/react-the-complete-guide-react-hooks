@@ -8,6 +8,7 @@ import ErrorModal from "../UI/ErrorModal";
 const Search = React.memo(props => {
     const {onFilteredIngredients} = props; // object destructuring, so we can use it in useEffect dependencies
     const [enteredFilter, setEnteredFilter] = useState('');
+
     const inputRef = useRef();
     const {isLoading, error, data, sendRequest, clear} = useHttp();
     // We can use useEffect() for all sideEffects functionality.

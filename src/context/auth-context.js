@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 // Context is used to pass state throw components!!!
 
@@ -10,17 +10,20 @@ import React, { useState } from 'react';
 // You still need a <MyContext.Provider> above in the tree to provide the value for this context.
 
 // We will subscribe on this context in App.js,
-// Also I will console.log it in IngredientsList.js
+// Also I will console.log it in IngredientsList.js and Auth.js
 export const AuthContext = React.createContext({
     isAuth: false,
-    login: () => {}
+    login: () => {
+    }
 });
+// We need to connect AuthContext inside .Provider with value which will point to state!
 
 // In index.js we will publish context provider
 const AuthContextProvider = (props) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const loginHendler = () => {
-      setIsAuthenticated(true);
+        //console.log('AUTH-CONTEXT authContext.loginHandler');
+        setIsAuthenticated(true);
     };
 
     return (

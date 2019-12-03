@@ -4,12 +4,13 @@ import IngredientForm from './IngredientForm';
 import Search from './Search';
 import IngredientList from "./IngredientList";
 import ErrorModal from "../UI/ErrorModal";
-import useHttp from "../../hooks/http";
+import useHttp from "../../hooks/http"; // custom hook
+
 // reducer automatically pass 2 arguments(state, action)
 const ingredientReducer = (currentIngredients, action) => {
     switch (action.type) {
-        case "SET_INGREDIENT":
-            return action.ingredients;
+        case "FILTER_INGREDIENT":
+            return action.filteredIngredients;
         case "ADD_INGREDIENT":
             return [...currentIngredients, action.ingredient];
         case "DELETE_INGREDIENT":
@@ -63,13 +64,13 @@ const Ingredients = () => {
             // });
         }, [sendRequest]);
 
-        // useCallback prevent infinite loop by cashing the setUserIngredients(SET_INGREDIENT) to avoid re-rendering inside useEffect in Search.js
+        // useCallback prevent infinite loop by cashing the setUserIngredients(FILTER_INGREDIENT) to avoid re-rendering inside useEffect in Search.js
         // https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/15700360#announcements
         const filteredIngredientsHandler = useCallback((filteredIngredients) => {
             // setUserIngredients(filteredIngredients);
             dispatch({
-                type: "SET_INGREDIENT",
-                ingredients: filteredIngredients
+                type: "FILTER_INGREDIENT",
+                filteredIngredients: filteredIngredients
             });
         }, []); // Here we don't pass useCallback dependency since setUserIngredients is useState method
 

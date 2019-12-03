@@ -18,7 +18,7 @@ const IngredientForm = React.memo(props => {
     const [enteredTitle, setEnteredTitle] = useState('');
     //     property.value, actionFunction
     const [enteredAmount, setEnteredAmount] = useState('');
-    console.log('RENDERING INGREDIENT FROM!');
+    //console.log('RENDERING INGREDIENT FROM!');
 
     const submitHandler = event => {
         event.preventDefault();
