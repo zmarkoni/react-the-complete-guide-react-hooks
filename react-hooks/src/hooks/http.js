@@ -44,6 +44,9 @@ const useHttp = () => {
     const sendRequest = useCallback((url, method, body, reqExtra, reqIdentifier) => {
         dispatchHttp({type: "SEND", identifier: reqIdentifier});
 
+        // we can do "return fetch" and create promise and
+        // catch it with sendRequest.then and have functionality as before without using useEffect
+        // now we are handling response in useEffect and we don't need promise
         fetch(
             url,
             {
