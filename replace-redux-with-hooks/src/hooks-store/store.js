@@ -1,3 +1,6 @@
+// instead of this file we can use NPM package
+// https://www.npmjs.com/package/use-global-hook
+
 // build this file: https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/15700468#overview
 // explanation after finishing: https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/15700486#overview
 import { useState, useEffect } from 'react';
